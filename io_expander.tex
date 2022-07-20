@@ -1,0 +1,242 @@
+% Options here are passed to the article class.
+% Most common options: 10pt, 11pt, 12pt
+\documentclass[10pt]{datasheet}
+
+% Input encoding and typographical rules for English language
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[english]{isodate}
+
+% tikz is used to draw images in this example, but you can
+% also use \includegraphics{}.
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{circuitikz}
+\usetikzlibrary{calc}
+
+% These define global texts that are used in headers and titles.
+\title{IO Expander Datashheet}
+\author{Expansion Ltd.}
+\date{July 2022}
+\revision{Revision 1}
+\companylogo{\Huge $\Delta$ Expansion Ltd.}
+
+\begin{document}
+\maketitle
+
+\section{Features}
+
+\begin{itemize}
+\item{Easy to use and easy to understand I/O Interfacing for any demands}
+\item{Powerful plattform for the simplest of requirements}
+\item{Giant footprint to improve weight distribution in YOUR product}
+\item{Simple UART interfacing for near instant IO operations}
+\end{itemize}
+
+\section{Applications}
+
+\begin{itemize}
+\item{Super secure systems in family businesses}
+\item{Highly specialized Linux systems doing ethernet stuff}
+\item{Usage in Hackathons because you can}
+\end{itemize}
+
+\section{General Description}
+This \textbf{datasheet} enables you to understand the basic concepts of this sophisticated and utterly overdimensioned I/O Expander.
+
+
+% Switch to next column
+\vfill\break
+
+\begin{figure}[h!]
+	\centering
+    \begin{circuitikz}[european]
+        \draw (0,0) node[dipchip,num pins=30 no topmark, external pins width=0.0](C){IC};
+		\node [left, font=\tiny] at (C.bpin 1) {SCK};
+		\node [left, font=\tiny] at (C.bpin 2) {3.3V};
+		\node [left, font=\tiny] at (C.bpin 3) {Ref};
+		\node [left, font=\tiny] at (C.bpin 4) {res.};
+		\node [left, font=\tiny] at (C.bpin 5) {res.};
+		\node [left, font=\tiny] at (C.bpin 6) {res.};
+		\node [left, font=\tiny] at (C.bpin 7) {res.};
+		\node [left, font=\tiny] at (C.bpin 8) {res.};
+		\node [left, font=\tiny] at (C.bpin 9) {res.};
+		\node [left, font=\tiny] at (C.bpin 10) {res.};
+		\node [left, font=\tiny] at (C.bpin 11) {res.};
+		\node [left, font=\tiny] at (C.bpin 12) {5V};
+		\node [left, font=\tiny] at (C.bpin 13) {RST};
+		\node [left, font=\tiny] at (C.bpin 14) {GND};
+		\node [left, font=\tiny] at (C.bpin 15) {VIN};
+		\node [right, font=\tiny] at (C.bpin 16) {TX};
+		\node [right, font=\tiny] at (C.bpin 17) {RX};
+		\node [right, font=\tiny] at (C.bpin 18) {RST};
+		\node [right, font=\tiny] at (C.bpin 19) {GND};
+		\node [right, font=\tiny] at (C.bpin 20) {D1};
+		\node [right, font=\tiny] at (C.bpin 21) {D2};
+		\node [right, font=\tiny] at (C.bpin 22) {D3};
+		\node [right, font=\tiny] at (C.bpin 23) {D4};
+		\node [right, font=\tiny] at (C.bpin 24) {D5};
+		\node [right, font=\tiny] at (C.bpin 25) {D6};
+		\node [right, font=\tiny] at (C.bpin 26) {D7};
+		\node [right, font=\tiny] at (C.bpin 27) {D8};
+		\node [right, font=\tiny] at (C.bpin 28) {D9};
+		\node [right, font=\tiny] at (C.bpin 29) {D10};
+		\node [right, font=\tiny] at (C.bpin 30) {D11};
+    \end{circuitikz}
+    \caption{Pinout and internal circuit}
+\end{figure}
+
+\newpage
+% For wide tables, a single column layout is better. It can be switched
+% page-by-page.
+\onecolumn
+
+\section{Pin Description}
+Pin description is done using the table below. (Pinout should really be sufficient though...)
+
+\begin{table}[h]
+\begin{threeparttable}
+\caption{Pin Description}
+\begin{tabularx}{\textwidth}{l | c | X}
+    \thickhline
+    \textbf{Pin} & \textbf{Name} & \textbf{Function}\\
+    \hline
+    1  		& SCK 	& Clock \\
+    \hline
+    2 		& 3.3V 	& 3.3 V Power supply  \\
+    \hline
+    3		& Ref	& Reference \\
+    \hline
+    4 - 11 	& Res	& Reserved - Nothing to see here \\
+    \hline
+    12  	& 5V  	& 5V Power supply \\
+    \hline
+    13  	& RST 	& Reset on high \\
+    \hline
+    14  	& GND 	& Ground \\
+    \hline
+    15  	& VIN 	& Voltage In \\
+    \hline
+    16  	& TX  	& UART Transmit - Connect to RX of given controller \\
+    \hline
+    17  	& RX  	& Uart Receive - Connect to TX of given controller \\
+    \hline
+    18  	& RST 	& Reset on high \\
+    \hline
+    19  	& GND 	& Ground \\
+    \hline
+    20  	& D1  	& Digital I/O Pin \\
+    \hline
+    21  	& D2  	& Digital I/O Pin \\
+    \hline
+    22  	& D3  	& Digital I/O Pin \\
+    \hline
+    23  	& D4  	& Digital I/O Pin \\
+    \hline
+    24  	& D5  	& Digital I/O Pin \\
+    \hline
+    25  	& D6  	& Digital I/O Pin \\
+    \hline
+    26  	& D7  	& Digital I/O Pin \\
+    \hline
+    27  	& D8  	& Digital I/O Pin \\
+    \hline
+    28  	& D9  	& Digital I/O Pin \\
+    \hline
+    29  	& D10 	& Digital I/O Pin \\
+    \hline
+    30  	& D11 	& Digital I/O Pin \\
+    \thickhline
+\end{tabularx}
+\begin{tablenotes}
+\item[1]{Errors in pin assignment are users fault.}
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+
+\newpage
+\twocolumn
+\section{Detailed Description}
+
+asdasdasdasd
+
+% Switch to next column
+\vfill\break
+asdasdasdsad
+
+\onecolumn
+
+\begin{table}[h]
+\begin{threeparttable}
+\caption{Pin Address Map}
+\begin{tabularx}{\textwidth}{l | c | c | c | c | c | c | c | c | X}
+    \thickhline
+    \textbf{Pin}	& \textbf{bit8}	& \textbf{bit7}	& \textbf{bit6}	& \textbf{bit5}	& \textbf{bit4}	& \textbf{bit3}	& \textbf{bit2}	& \textbf{bit1} 	& \textbf{Hex} \\
+    \hline
+    D1	&	x	&	x	&	x	&	x	&	0	&	0	&	0	&	1 	& 0xX1 \\
+    \hline
+    D2	&	x	&	x	&	x	&	x	&	0	&	0	&	1	&	0	& 0xX2 \\
+    \hline
+    D3	&	x	&	x	&	x	&	x	&	0	&	0	&	1	&	1	& 0xX3 \\
+    \hline
+    D4	&	x	&	x	&	x	&	x	&	0	&	1	&	0	&	0	& 0xX4 \\
+    \hline
+    D5	&	x	&	x	&	x	&	x	&	0	&	1	&	0	&	1	& 0xX5 \\
+    \hline
+    D6	&	x	&	x	&	x	&	x	&	0	&	1	&	1	&	0	& 0xX6 \\
+    \hline
+    D7	&	x	&	x	&	x	&	x	&	0	&	1	&	1	&	1	& 0xX7 \\
+    \hline
+    D8	&	x	&	x	&	x	&	x	&	1	&	0	&	0	&	0	& 0xX8 \\
+    \hline
+    D9	&	x	&	x	&	x	&	x	&	1	&	0	&	0	&	1	& 0xX9 \\
+    \hline
+    D10	&	x	&	x	&	x	&	x	&	1	&	0	&	1	&	0	& 0xXA \\
+    \hline
+    D11	&	x	&	x	&	x	&	x	&	1	&	0	&	1	&	1	& 0xXB \\
+\end{tabularx}
+\begin{tablenotes}
+\item[1]{x means dont care. Those Bits are reserved to set high or low, see next table.}
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[h]
+\begin{threeparttable}
+\caption{Setting I/O's to high}
+\begin{tabularx}{\textwidth}{l | c | c | c | c | c | c | c | c | X}
+    \thickhline
+    \textbf{Pin}	& \textbf{bit8}	& \textbf{bit7}	& \textbf{bit6}	& \textbf{bit5}	& \textbf{bit4}	& \textbf{bit3}	& \textbf{bit2}	& \textbf{bit1} 	& \textbf{Hex} \\
+    \hline
+    D1	&	0	&	0	&	0	&	1	&	x	&	x	&	x	&	x	&0x1X \\
+	\hline
+    D2	&	0	&	0	&	1	&	0	& 	x	&	x	&	x	&	x	&0x2X \\
+	\hline
+    D3	&	0	&	0	&	1	&	1	& 	x	&	x	&	x	&	x	&0x3X \\
+	\hline
+    D4	&	0	&	1	&	0	&	0	& 	x	&	x	&	x	&	x	&0x4X \\
+	\hline
+    D5	&	0	&	1	&	0	&	1	& 	x	&	x	&	x	&	x	&0x5X \\
+	\hline
+    D6	&	0	&	1	&	1	&	0	& 	x	&	x	&	x	&	x	&0x6X \\
+	\hline
+    D7	&	0	&	1	&	1	&	1	& 	x	&	x	&	x	&	x	&0x7X \\
+	\hline
+    D8	&	1	&	0	&	0	&	0	& 	x	&	x	&	x	&	x	&0x8X \\
+	\hline
+    D9	&	1	&	0	&	0	&	1	& 	x	&	x	&	x	&	x	&0x9X \\
+	\hline
+    D10	&	1	&	0	&	1	&	0	& 	x	&	x	&	x	&	x	&0xAX \\
+	\hline
+    D11	&	1	&	0	&	1	&	1	& 	x	&	x	&	x	&	x	&0xBX \\
+\end{tabularx}
+\begin{tablenotes}
+\item[1]{The high nibble sets addressed pins to high (1) or low (0)}
+\item[2]{Multiple Pins can be set to high or low at the same time by addressing them using the low nibble}
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+\end{document}
+
+

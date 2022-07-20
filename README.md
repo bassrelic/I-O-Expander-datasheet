@@ -1,3 +1,6 @@
+This is a simple datasheet for a fictional I/O expander. This work is based upon the Work of PetteriAimonen.
+The original repository may be found here: https://github.com/PetteriAimonen/latex-datasheet-template
+
 LaTeX document class for creating electronics data sheets
 =========================================================
 
