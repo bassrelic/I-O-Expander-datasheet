@@ -159,17 +159,54 @@ Pin description is done using the table below. (Pinout should really be sufficie
 \twocolumn
 \section{Detailed Description}
 
-asdasdasdasd
+This I/O Expander is a general-purpose input/output (GPIO)
+peripheral that provides 11 I/O ports, D1 to D11, controlled through a 
+high-speed serial interface. The 11 I/O ports can be used as inputs or
+open-drain outputs in any combination.
+
+\subsubsection{Communication}
+The communication with this device is done using 8 Bit messages. There are 
+three distinct messages to control the I/O Expander and one response message 
+which announces the levels of defined input pins. Those concepts are described 
+in the next sections.
+
+\subsubsection{Setting Output Ports}
+The communication with this device is as simple as it gets. To set or reset I/O 
+ports, one must supply 8 bit of date to the device. The protocol expects the 
+application to identify the ports which shall change state to be identified 
+with four LSB according to \ref{table:Pin_address_map}. Using the most 
+significant nibble of the message, one can set the specified Ports to high or 
+low. The Mapping is shown in \ref{table:Pin_state_map}
 
 % Switch to next column
 \vfill\break
-asdasdasdsad
+
+\subsubsection{I/O direction definition}
+Identification if pins as Input / output is done with the "special" definition 
+message. This message has all bits of the most significant nibble set to high. 
+The least significant nibble specifies which pin shall be set as input (High) 
+or as output (Low). This means that all I/O direction definition messages must 
+start with 0xF.
+
+\subsubsection{Reading Inputs}
+Similar to the I/O direction definition, the read request message is a special 
+case. For this request, the high nibble needs to be set to 0xE. In this special 
+case, the least significant nibble is ignored.
+
+When the read request message is received, the I/O Expander returns with a port 
+status message. This Message identifies the direction of all ports in the most 
+significant nibble. If a port is set as output with high level, the 
+corresponding bit in the least significant nibble is set to high (1). If the 
+port is defined as input, the corresponding Bit in the least significant nibble 
+represents high state with a high level (1) or low state with a low level (0).
+
 
 \onecolumn
 
 \begin{table}[h]
 \begin{threeparttable}
 \caption{Pin Address Map}
+\label{table:Pin_address_map}
 \begin{tabularx}{\textwidth}{l | c | c | c | c | c | c | c | c | X}
     \thickhline
     \textbf{Pin}	& \textbf{bit8}	& \textbf{bit7}	& \textbf{bit6}	& \textbf{bit5}	& \textbf{bit4}	& \textbf{bit3}	& \textbf{bit2}	& \textbf{bit1} 	& \textbf{Hex} \\
@@ -205,6 +242,7 @@ asdasdasdsad
 \begin{table}[h]
 \begin{threeparttable}
 \caption{Setting I/O's to high}
+\label{table:Pin_state_map}
 \begin{tabularx}{\textwidth}{l | c | c | c | c | c | c | c | c | X}
     \thickhline
     \textbf{Pin}	& \textbf{bit8}	& \textbf{bit7}	& \textbf{bit6}	& \textbf{bit5}	& \textbf{bit4}	& \textbf{bit3}	& \textbf{bit2}	& \textbf{bit1} 	& \textbf{Hex} \\
