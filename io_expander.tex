@@ -79,9 +79,9 @@ This \textbf{datasheet} enables you to understand the basic concepts of this sop
 		\node [right, font=\tiny] at (C.bpin 25) {D6};
 		\node [right, font=\tiny] at (C.bpin 26) {D7};
 		\node [right, font=\tiny] at (C.bpin 27) {D8};
-		\node [right, font=\tiny] at (C.bpin 28) {D9};
-		\node [right, font=\tiny] at (C.bpin 29) {D10};
-		\node [right, font=\tiny] at (C.bpin 30) {D11};
+		\node [right, font=\tiny] at (C.bpin 28) {NC};
+		\node [right, font=\tiny] at (C.bpin 29) {NC};
+		\node [right, font=\tiny] at (C.bpin 30) {NC};
     \end{circuitikz}
     \caption{Pinout and internal circuit}
 \end{figure}
@@ -141,11 +141,11 @@ Pin description is done using the table below. (Pinout should really be sufficie
     \hline
     27  	& D8  	& Digital I/O Pin \\
     \hline
-    28  	& D9  	& Digital I/O Pin \\
+    28  	& NC  	& Not Connected \\
     \hline
-    29  	& D10 	& Digital I/O Pin \\
+    29  	& NC  	& Not Connected \\
     \hline
-    30  	& D11 	& Digital I/O Pin \\
+    30  	& NC  	& Not Connected \\
     \thickhline
 \end{tabularx}
 \begin{tablenotes}
@@ -160,45 +160,44 @@ Pin description is done using the table below. (Pinout should really be sufficie
 \section{Detailed Description}
 
 This I/O Expander is a general-purpose input/output (GPIO)
-peripheral that provides 11 I/O ports, D1 to D11, controlled through a 
-high-speed serial interface. The 11 I/O ports can be used as inputs or
+peripheral that provides 8 I/O ports, D1 to D8, controlled through a 
+high-speed serial interface. These 8 I/O ports can be used as inputs or
 open-drain outputs in any combination.
 
 \subsubsection{Communication}
-The communication with this device is done using 8 Bit messages. There are 
+The communication with this device is done using predefined messages. There are 
 three distinct messages to control the I/O Expander and one response message 
 which announces the levels of defined input pins. Those concepts are described 
 in the next sections.
 
 \subsubsection{Setting Output Ports}
 The communication with this device is as simple as it gets. To set or reset I/O 
-ports, one must supply 8 bit of date to the device. The protocol expects the 
-application to identify the ports which shall change state to be identified 
-with four LSB according to \ref{table:Pin_address_map}. Using the most 
-significant nibble of the message, one can set the specified Ports to high or 
-low. The Mapping is shown in \ref{table:Pin_state_map}
+ports, one must send the SET command and supply 8 bit of data to the device. 
+The command to set ports is defined as 0x0F.
+The protocol expects the application to identify the ports which shall change 
+state to be identified with four LSB according to \ref{table:Pin_address_map}. 
+The Mapping is shown in \ref{table:Pin_state_map}.
 
 % Switch to next column
 \vfill\break
 
 \subsubsection{I/O direction definition}
-Identification if pins as Input / output is done with the "special" definition 
-message. This message has all bits of the most significant nibble set to high. 
-The least significant nibble specifies which pin shall be set as input (High) 
-or as output (Low). This means that all I/O direction definition messages must 
-start with 0xF.
+Identification of pins as Input / output is done with the I/O definition 
+message. One must send the DIR command followed by the corresponding 
+The command to specify the direction of ports is defined as 0xF0.
+Pins identified with a 1 are set to be output's and pins set to 
+0 are set as inputs.
 
 \subsubsection{Reading Inputs}
 Similar to the I/O direction definition, the read request message is a special 
-case. For this request, the high nibble needs to be set to 0xE. In this special 
-case, the least significant nibble is ignored.
+case. For this request, command is specified as 0xAA.
 
 When the read request message is received, the I/O Expander returns with a port 
-status message. This Message identifies the direction of all ports in the most 
-significant nibble. If a port is set as output with high level, the 
-corresponding bit in the least significant nibble is set to high (1). If the 
-port is defined as input, the corresponding Bit in the least significant nibble 
-represents high state with a high level (1) or low state with a low level (0).
+status message. This Message identifies the direction of all ports in the first byte. 
+If a port is set as output with high level, the corresponding bit in the second byte 
+is set to high (1). If the port is defined as input, the corresponding Bit in the 
+second byte represents high state with a high level (1) or low state 
+with a low level (0).
 
 
 \onecolumn
@@ -211,30 +210,25 @@ represents high state with a high level (1) or low state with a low level (0).
     \thickhline
     \textbf{Pin}	& \textbf{bit8}	& \textbf{bit7}	& \textbf{bit6}	& \textbf{bit5}	& \textbf{bit4}	& \textbf{bit3}	& \textbf{bit2}	& \textbf{bit1} 	& \textbf{Hex} \\
     \hline
-    D1	&	x	&	x	&	x	&	x	&	0	&	0	&	0	&	1 	& 0xX1 \\
+    D1	&	0	&	0	&	0	&	0	&	0	&	0	&	0	&	1 	& 0xX1 \\
     \hline
-    D2	&	x	&	x	&	x	&	x	&	0	&	0	&	1	&	0	& 0xX2 \\
+    D2	&	0	&	0	&	0	&	0	&	0	&	0	&	1	&	0	& 0xX2 \\
     \hline
-    D3	&	x	&	x	&	x	&	x	&	0	&	0	&	1	&	1	& 0xX3 \\
+    D3	&	0	&	0	&	0	&	0	&	0	&	1	&	0	&	0	& 0xX4 \\
     \hline
-    D4	&	x	&	x	&	x	&	x	&	0	&	1	&	0	&	0	& 0xX4 \\
+    D4	&	0	&	0	&	0	&	0	&	1	&	0	&	0	&	0	& 0xX8 \\
     \hline
-    D5	&	x	&	x	&	x	&	x	&	0	&	1	&	0	&	1	& 0xX5 \\
+    D5	&	0	&	0	&	0	&	1	&	0	&	0	&	0	&	0	& 0x1X \\
     \hline
-    D6	&	x	&	x	&	x	&	x	&	0	&	1	&	1	&	0	& 0xX6 \\
+    D6	&	0	&	0	&	1	&	0	&	0	&	0	&	0	&	0	& 0x2X \\
     \hline
-    D7	&	x	&	x	&	x	&	x	&	0	&	1	&	1	&	1	& 0xX7 \\
+    D7	&	0	&	1	&	0	&	0	&	0	&	0	&	0	&	0	& 0x4X \\
     \hline
-    D8	&	x	&	x	&	x	&	x	&	1	&	0	&	0	&	0	& 0xX8 \\
-    \hline
-    D9	&	x	&	x	&	x	&	x	&	1	&	0	&	0	&	1	& 0xX9 \\
-    \hline
-    D10	&	x	&	x	&	x	&	x	&	1	&	0	&	1	&	0	& 0xXA \\
-    \hline
-    D11	&	x	&	x	&	x	&	x	&	1	&	0	&	1	&	1	& 0xXB \\
+    D8	&	1	&	0	&	0	&	0	&	0	&	0	&	0	&	0	& 0x8X \\
 \end{tabularx}
 \begin{tablenotes}
-\item[1]{x means dont care. Those Bits are reserved to set high or low, see next table.}
+\item[1]{x means dont care.}
+\item[2]{Multiple Pins can be set to high or low at the same time by addressing them at the same time.}
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -247,34 +241,26 @@ represents high state with a high level (1) or low state with a low level (0).
     \thickhline
     \textbf{Pin}	& \textbf{bit8}	& \textbf{bit7}	& \textbf{bit6}	& \textbf{bit5}	& \textbf{bit4}	& \textbf{bit3}	& \textbf{bit2}	& \textbf{bit1} 	& \textbf{Hex} \\
     \hline
-    D1	&	0	&	0	&	0	&	1	&	x	&	x	&	x	&	x	&0x1X \\
-	\hline
-    D2	&	0	&	0	&	1	&	0	& 	x	&	x	&	x	&	x	&0x2X \\
-	\hline
-    D3	&	0	&	0	&	1	&	1	& 	x	&	x	&	x	&	x	&0x3X \\
-	\hline
-    D4	&	0	&	1	&	0	&	0	& 	x	&	x	&	x	&	x	&0x4X \\
-	\hline
-    D5	&	0	&	1	&	0	&	1	& 	x	&	x	&	x	&	x	&0x5X \\
-	\hline
-    D6	&	0	&	1	&	1	&	0	& 	x	&	x	&	x	&	x	&0x6X \\
-	\hline
-    D7	&	0	&	1	&	1	&	1	& 	x	&	x	&	x	&	x	&0x7X \\
-	\hline
-    D8	&	1	&	0	&	0	&	0	& 	x	&	x	&	x	&	x	&0x8X \\
-	\hline
-    D9	&	1	&	0	&	0	&	1	& 	x	&	x	&	x	&	x	&0x9X \\
-	\hline
-    D10	&	1	&	0	&	1	&	0	& 	x	&	x	&	x	&	x	&0xAX \\
-	\hline
-    D11	&	1	&	0	&	1	&	1	& 	x	&	x	&	x	&	x	&0xBX \\
+    D1	&	0	&	0	&	0	&	0	&	0	&	0	&	0	&	1 	& 0xX1 \\
+    \hline
+    D2	&	0	&	0	&	0	&	0	&	0	&	0	&	1	&	0	& 0xX2 \\
+    \hline
+    D3	&	0	&	0	&	0	&	0	&	0	&	1	&	0	&	0	& 0xX4 \\
+    \hline
+    D4	&	0	&	0	&	0	&	0	&	1	&	0	&	0	&	0	& 0xX8 \\
+    \hline
+    D5	&	0	&	0	&	0	&	1	&	0	&	0	&	0	&	0	& 0x1X \\
+    \hline
+    D6	&	0	&	0	&	1	&	0	&	0	&	0	&	0	&	0	& 0x2X \\
+    \hline
+    D7	&	0	&	1	&	0	&	0	&	0	&	0	&	0	&	0	& 0x4X \\
+    \hline
+    D8	&	1	&	0	&	0	&	0	&	0	&	0	&	0	&	0	& 0x8X \\
 \end{tabularx}
 \begin{tablenotes}
-\item[1]{The high nibble sets addressed pins to high (1) or low (0)}
-\item[2]{Multiple Pins can be set to high or low at the same time by addressing them using the low nibble}
+\item[1]{x means dont care.}
+\item[2]{Multiple Pins can be set to high or low at the same time by addressing them at the same time.}
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 \end{document}
-
-
